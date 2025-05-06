@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Simple Hero Section</title>
+</head>
+<body>
+    <main>
+        <section id="hero_section">
+            <div id="container">
+                <header>
+                    <div id="logo">
+                        <h2>Juice</h2>
+                    </div>
+                    <i class="fa-solid fa-burger"></i>
+                    <nav>
+                        <p>✖</p>
+                        <ul class="nav-items">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Services</a></li>
+                        </ul>
+                    </nav>
+                </header>
+
+                <div id="hero_content">
+                    <div id="hero_text">
+                        <h1>
+                            Get Fresh <br>
+                            <span>Juiceables</span><br>
+                            Everyday
+                        </h1>
+                        <p>Starting at $360 per month. Get those benefits and more.</p>
+                        <button>Shop Now</button>
+                    </div>
+
+                    <div id="hero_img">
+                        <img src="img/juice.png" alt="">
+                        <ul>
+                            <li class="active">
+                                <img src="img/juice.png" alt="">
+                            </li>
+                            <li>
+                                <img src="img/natural-juice-ad.png" alt="">
+                            </li>
+                            <li>
+                                <img src="img/mango-juice.png" alt="">
+                            </li>
+                            <li>
+                                <img src="img/guava juice.png" alt="">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+<script>
+    let links = document.querySelectorAll('.nav-items li a');
+    
+    for(let i=0; i<links.length; i++){
+        links[i].addEventListener('click', function(){
+            for(let x=0; x<links.length; x++){
+                if(links[i] === links[x]){
+                    links[x].classList.add('links');
+                }else{
+                    links[x].classList.remove('links');
+                }
+            }
+        })
+    }
+
+    window.addEventListener('load', function(){
+        let hero_text = document.querySelector('#hero_text');
+        let hero_img = document.querySelector('#hero_img');
+        hero_text.classList.add('show_hero_text');
+        hero_img.classList.add('show_hero_img');
+    })
+
+    let preview_img = document.querySelectorAll("#hero_img ul li img");
+    let hero_img = document.querySelector("#hero_img > img");
+
+    for(let i=0; i<preview_img.length; i++){
+        preview_img[i].addEventListener('click', function(){
+            hero_img.src = this.src;
+            for(let x=0; x<preview_img.length; x++){
+                if(preview_img[i] === preview_img[x]){
+                    // this.parentElement.style.border = "1px solid #ef5e41";
+                    this.parentElement.classList.toggle("active");
+                    hero_img.style.animation = "none";
+                    this.offsetHeight;
+                    hero_img.style.animation = "increasedOpacity 0.25s linear";
+
+                }else{
+                    preview_img[x].parentElement.style.border = "none";
+                }
+            }
+        })
+    }
+
+    let img_num = 1;
+    setInterval(() => {
+        hero_img.src = preview_img[img_num].src;
+        hero_img.style.animation = "none";
+        hero_img.offsetHeight;
+        hero_img.style.animation = "increasedOpacity 0.25s linear";
+
+        preview_img.forEach((img, index) => {
+            if(index === img_num){
+                img.parentElement.classList.add("active");
+            }else{
+                img.parentElement.classList.remove("active");
+            }
+        })
+
+        img_num = (img_num+1) % preview_img.length;
+    }, 5000)
+
+    let burger = document.querySelector(".fa-burger");
+    let nav = document.querySelector('nav');
+    let navX = document.querySelector('nav p');
+    let navUL = document.querySelector('nav ul');
+
+    burger.addEventListener('click', function(){
+        nav.style.cssText = "width:65%; padding:1rem; transition: all 0.25s;";
+        navX.style.display = "block";
+        navUL.style.display = "block";
+    });
+
+    navX.addEventListener("click", function(){
+        nav.style.cssText = "width:0%; padding:0rem; transition: all 0.25s;";
+        navUL.style.display = "none";
+        this.style.display = "none";
+    })
+</script>
+
+</html>
